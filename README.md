@@ -21,17 +21,18 @@ IRL it may seems a bit meaningless because (you'll want to gather data at host
 level, not container one) but it depends on the plugins you'll use (actionnable
 plugin like `curl_json`, `tail_csv`, `ping`...)
 
-*_ **This is a work in progress**. PR are welcomes folks :) _*
+**This is a work in progress**
+*... PR are welcomes folks :)*
 
 ## TL;DR
 
-Execute this command :
+If you are on linux, simply execute this command :
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/ekino/docker-monitoring-stack/master/helper.sh | bash -s run
 ```
 
-And head to your new [local Grafana instance](http://localhost/) to get this result :
+Then head to your new [local Grafana instance](http://localhost/) to get this result :
 
 ![Screenshot](oneliner-result.png)
 
