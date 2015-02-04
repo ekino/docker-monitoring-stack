@@ -1,0 +1,387 @@
+{
+  "id": null,
+  "title": "Ekino Sample Dashboard",
+  "originalTitle": "Ekino Sample Dashboard",
+  "tags": [
+    "docker",
+    "influxdb",
+    "collectd"
+  ],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": true,
+  "rows": [
+    {
+      "title": "New row",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "Welcome",
+          "error": false,
+          "span": 12,
+          "editable": true,
+          "type": "text",
+          "id": 5,
+          "mode": "markdown",
+          "content": "![Ekino](/img/logo-ekino.png)\n\n---\n\n#### Sample Dashboard\n\nThis sample dashboard is part of [`ekino/grafana`](https://registry.hub.docker.com/u/ekino/grafana/) project and provided by [`Ekino`](http://www.ekino.com)\n\nIt gives you some disk, network and cpu+memory graphs to start with..\n\nFor insight on how to collect and store data, see our main [`docker-monitoring-stack`](https://github.com/ekino/docker-monitoring-stack) project on GitHub.\nFrom there you'll be able to see and understand the full workflow.\n\nFurther graph presets may come. \nStay tuned :)",
+          "style": {},
+          "links": []
+        }
+      ]
+    },
+    {
+      "title": "System",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "Disk",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 1,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "bytes",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false,
+            "alignAsTable": true,
+            "rightSide": true,
+            "hideEmpty": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "demohost/df-root/df_complex-free",
+              "query": "select mean(value) from \"demohost/df-root/df_complex-free\" where $timeFilter group by time($interval) order asc",
+              "alias": "data-free"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "demohost/df-root/df_complex-used",
+              "query": "select mean(value) from \"demohost/df-root/df_complex-used\" where $timeFilter group by time($interval) order asc",
+              "alias": "data-used"
+            }
+          ],
+          "aliasColors": {
+            "data-used": "#BF1B00"
+          },
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "Network",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 2,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "bytes",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": 0,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)",
+            "thresholdLine": false
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false,
+            "alignAsTable": true,
+            "rightSide": true
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "demohost/network/if_octets",
+              "query": "select mean(value) from \"demohost/network/if_octets\" where $timeFilter group by time($interval) order asc",
+              "alias": "network-octets",
+              "hide": false,
+              "fill": ""
+            }
+          ],
+          "aliasColors": {
+            "network-octets": "#447EBC"
+          },
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "Free Graph",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 4,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "CPU / Memory",
+          "error": false,
+          "span": 12,
+          "editable": true,
+          "type": "graph",
+          "id": 3,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "percent",
+            "bytes"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false,
+            "alignAsTable": true,
+            "rightSide": true
+          },
+          "nullPointMode": "null",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "demohost/load/load",
+              "query": "select mean(value) from \"demohost/load/load\" where $timeFilter group by time($interval) order asc",
+              "alias": "load",
+              "hide": false
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "demohost/memory/memory-used",
+              "query": "select mean(value) from \"demohost/memory/memory-used\" where $timeFilter group by time($interval) order asc",
+              "hide": false,
+              "alias": "memory"
+            }
+          ],
+          "aliasColors": {
+            "load": "#E5A8E2",
+            "demohost/memory/memory-used.mean": "#962D82"
+          },
+          "seriesOverrides": [
+            {
+              "alias": "demohost/memory/memory-used.mean",
+              "yaxis": 2
+            },
+            {
+              "alias": "demohost/memory/memory-used.count",
+              "yaxis": 2
+            },
+            {
+              "alias": "demohost/memory/memory-used.sum",
+              "yaxis": 2
+            },
+            {
+              "alias": "memory",
+              "yaxis": 2
+            }
+          ],
+          "links": []
+        }
+      ],
+      "showTitle": true
+    }
+  ],
+  "nav": [
+    {
+      "type": "timepicker",
+      "enable": true,
+      "status": "Stable",
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "now": true,
+      "collapse": false,
+      "notice": false
+    }
+  ],
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "templating": {
+    "list": [],
+    "enable": true
+  },
+  "annotations": {
+    "list": [],
+    "enable": true
+  },
+  "refresh": false,
+  "version": 6,
+  "hideAllLegends": false
+}

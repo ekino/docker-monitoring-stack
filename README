@@ -1,0 +1,33 @@
+# Ekino Monitoring Stack
+
+## Description
+
+This repo contains the following docker images sources :
+* [`ekino/influxdb`](https://registry.hub.docker.com/u/ekino/influxdb/)
+* [`ekino/grafana`](https://registry.hub.docker.com/u/ekino/grafana/)
+* [`ekino/collectd`](https://registry.hub.docker.com/u/ekino/collectd/)
+
+The first two are made to be run in production environments.
+
+The third one is more here to complete the stack but may be kind of meaningless
+as you may want to gather data at host level, not at container one.
+
+Though in the context of this project, it is very useful to provide a full
+collectd-influxdb-grafana workflow
+
+*This is a work in progress. PR are welcomes folks :)*
+
+## TL;DR
+
+For demo usage purpose :
+
+```bash
+curl -sSL https://raw.githubusercontent.com/ekino/docker-monitoring-stack/master/helper.sh | bash -s run
+```
+
+Then head to your new [local Grafana instance](http://localhost/)
+
+## Real-life usage
+
+*TODO*
+

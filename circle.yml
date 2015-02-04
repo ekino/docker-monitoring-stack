@@ -1,0 +1,17 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - ./helper.sh clear:all build run
+
+test:
+  pre:
+    - sleep 30
+    - docker logs influxdb
+    - docker logs grafana
+    - docker logs collectd
+  override:
+    - curl -sS localhost
+    - docker exec collectd collectdctl listval
