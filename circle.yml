@@ -9,8 +9,8 @@ dependencies:
 test:
   pre:
     - sleep 30
-    - docker logs influx
-    - docker logs grafana
-    - docker logs collectd
+    - docker logs influx.local
+    - docker logs grafana.local
+    - docker logs collectd.local
   override:
     - curl -sS localhost
