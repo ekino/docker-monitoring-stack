@@ -9,9 +9,9 @@ bgreen="$(tput bold ; tput setaf 2)"
 red="$(tput setaf 1)"
 reset="$(tput sgr0)"
 
-INFLUX_NAME=influx
-GRAFANA_NAME=grafana
-COLLECTD_NAME=collectd
+INFLUX_NAME=influx.local
+GRAFANA_NAME=grafana.local
+COLLECTD_NAME=collectd.local
 INFLUX_DATABASE=collectdb
 
 echo ${1%:*}
@@ -38,20 +38,26 @@ do
       ;;
     'run')
       # Start local INFLUXDB server
-      echo -e "\n${cyan}==> Starting $INFLUX_NAME server${reset}"
+      echo -e "\n${cyan}==> Starting influxdb server '$INFLUX_NAME'${reset}"
       docker run --name $INFLUX_NAME -d -p 8083:8083 -p 8086:8086 -p 25826:25826/udp -e DATABASES=$INFLUX_DATABASE ekino/influxdb:latest
       influxip=$(docker inspect --format {{.NetworkSettings.IPAddress}} $INFLUX_NAME)
       w=20 ; echo -e "\n${cyan}==> Waiting ${w}s for influxdb container${reset}" ; sleep $w
       docker logs $(docker ps -lq)
 
+      if [[ $(host $INFLUX_NAME | grep -c "not found") -ne 0 ]] && [[ $(grep -c "$INFLUX_NAME" /etc/hosts) -eq 0 ]]
+      then
+        echo -e "\n${cyan}==> Adding '$INFLUX_NAME' entry to /etc/hosts (requires sudo)"
+        sudo sed -i '/^127.0.0.1/s/$/ '$INFLUX_NAME'/' /etc/hosts
+      fi
+
       # Start local GRAFANA server
-      echo -e "\n${cyan}==> Starting $GRAFANA_NAME server${reset}"
+      echo -e "\n${cyan}==> Starting grafana server${reset}"
       docker run --name $GRAFANA_NAME --link $INFLUX_NAME:$INFLUX_NAME -d -p 80:8080 -e INFLUXDB_URL="http://$INFLUX_NAME:8086" -e DB_NAME=$INFLUX_DATABASE ekino/grafana:latest
       w=5 ; echo -e "\n${cyan}==> Waiting ${w}s for grafana container${reset}" ; sleep $w
       docker logs $(docker ps -lq)
 
       # Start local COLLECTD server (useful to have the full workflow, but kind of meaningless)
-      echo -e "\n${cyan}==> Starting $COLLECTD_NAME server${reset}"
+      echo -e "\n${cyan}==> Starting collectd server${reset}"
       docker run --name $COLLECTD_NAME --link $INFLUX_NAME:$INFLUX_NAME -d -e INFLUXDB_HOST=$INFLUX_NAME ekino/collectd:latest
       w=5 ; echo -e "\n${cyan}==> Waiting ${w}s for collectd container${reset}" ; sleep $w
       docker logs $(docker ps -lq)
