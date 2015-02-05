@@ -69,9 +69,9 @@ map-size = "100g"
 #max-response-buffer-size = 100
 #concurrent-shard-query-limit = 10
 
-#[wal]
-#dir   = "/opt/influxdb/shared/data/wal"
-#flush-after = 1000 # the number of writes after which wal will be flushed, 0 for flushing on every write
-#bookmark-after = 1000 # the number of writes after which a bookmark will be created
-#index-after = 1000
-#requests-per-logfile = 10000
+[wal]
+dir   = "/opt/influxdb/shared/data/wal"
+flush-after = 1000 # the number of writes after which wal will be flushed, 0 for flushing on every write
+bookmark-after = 1000 # the number of writes after which a bookmark will be created
+index-after = 1000
+requests-per-logfile = 10000
