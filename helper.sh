@@ -22,7 +22,7 @@ do
     'clear'|'clean')
       echo -e "\n${cyan}==> Killing running containers${reset}"
       docker kill $INFLUX_NAME $GRAFANA_NAME $COLLECTD_NAME
-      echo -e "\n${cyan}==> Removing *all* containers${reset}"
+      echo -e "\n${cyan}==> Removing containers${reset}"
       docker rm $INFLUX_NAME $GRAFANA_NAME $COLLECTD_NAME
       echo -e "\n${cyan}==> Removing untagged/dangled images${reset}"
       [ "${1#*:}" = "all" ] && docker rmi $(docker images -qf dangling=true)

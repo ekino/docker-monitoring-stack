@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#set -x
+set -x
 
 exec /usr/bin/influxdb -config /opt/influxdb/current/config.toml &
 
